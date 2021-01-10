@@ -4,7 +4,7 @@ def setup():
     size(640, 360)
 
 class Ball:
-    global velocity, position
+    global velocity, position, radius
     position = PVector
     velocity = PVector
     radius = 0.0
@@ -17,27 +17,37 @@ class Ball:
         self.m = self.radius*0.1
         
     def update(self):
-        self.position.add(velocity)
+        self.position.add(self.velocity)
     
-    def checkBoundaryCollision():
-        if position.x > width-radius:
-            position.x = width-radius
-            velocity.x *= -1
-        elif position.x < radius:
-            position.x = radius
-            velocity.x *= -1
-        elif position.y > height-radius:
-            position.y = height-radius
-            velocity.y *= -1
-        elif position.y > radius:
-            position.y = radius
-            velocity.y *= -1
-
+    def checkBoundaryCollision(self):
+        if self.position.x > width-self.radius:
+            self.position.x = width-self.radius
+            self.velocity.x *= -1
+        elif self.position.x < self.radius:
+            self.position.x = self.radius
+            self.velocity.x *= -1
+        elif self.position.y > height-self.radius:
+            self.position.y = height-self.radius
+            self.velocity.y *= -1
+        elif self.position.y < self.radius:
+            self.position.y = self.radius
+            self.velocity.y *= -1
+            
+    def display(self):
+        noStroke()
+        fill(204)
+        ellipse(self.position.x, self.position.y, self.radius*2, self.radius*2)
+        
 balls = [Ball(100, 400, 20), Ball(700, 400, 80)]
+
 def draw():
-    background(0)
+    background(51)
     for x in range(len(balls)):
         balls[x].update()
-        balls[x].checkBoundaryCollision
+        print("updated")
+        balls[x].display()
+        print("displayed")
+        balls[x].checkBoundaryCollision()
+        print("checked")
 
         
